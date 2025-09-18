@@ -1,0 +1,29 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+    .hide-scrollbar::-webkit-scrollbar {
+    display: hidden;
+    }
+
+    .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
+    overflow-x: hidden;
+    }
+
+html {
+    scroll-behavior: smooth;
+}
+
+.snap-mandatory {
+    scroll-snap-type: y mandatory;
+}
+
+.snap-y {
+    scroll-snap-type: y var(--tw-scroll-snap-strictness);
+}
+
+.snap-start {
+    scroll-snap-align: start;
+}
