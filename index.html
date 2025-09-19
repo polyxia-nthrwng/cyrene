@@ -5,6 +5,18 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cyrene</title>
+    <style>
+      .skill-description {
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+      }
+
+      .skill-description.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
   </head>
   <body class="hide-scrollbar bg-gradient-to-b from-[#4e59c2] to-[#c2aee9]">
     <div class="fixed top-0 left-0 right-0 z-50 flex h-full max-h-[8vh] bg-white/10 backdrop-blur-md border-b border-white/5 shadow-lg" alt="navbar">
@@ -30,10 +42,83 @@
     </div>
     <div class="m-[1vh] h-[10hv]" alt="skills">
       <div class="container mx-auto px-4 flex justify-center space-x-4 py-4">
-        <img class="transition-transform scale-80 hover:scale-100 duration-400" src="./assets/An_Arrow_for_Flower_and_Fowl_Skill.png" alt="Skill 1" class="scale-70" />
-        <img class="transition-transform scale-80 hover:scale-100 duration-400" src="./assets/The_Beginning_of_You_and_I_Skill.png" alt="Skill 3" class="scale-70" />
-        <img class="transition-transform scale-80 hover:scale-100 duration-400" src="./assets/Radiant_Destiny_Skill.png" alt="Skill 2" class="scale-70" />
+        <div class="relative">
+          <img 
+            class="transition-transform scale-80 hover:scale-100 duration-400 cursor-pointer" 
+            src="./assets/An_Arrow_for_Flower_and_Fowl_Skill.png" 
+            alt="Skill 1" 
+            onclick="toggleDescription('skill1')"
+          />
+          <div id="skill1" class="skill-description hidden absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 p-4 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg w-64">
+            <h3 class="font-bold text-[#483695] mb-2">An Arrow for Flower and Fowl</h3>
+            <p class="text-sm text-[#483695]">Fires an enchanted arrow that deals Anemo DMG to enemies in its path.</p>
+          </div>
+        </div>
+        
+        <div class="relative">
+          <img 
+            class="transition-transform scale-80 hover:scale-100 duration-400 cursor-pointer" 
+            src="./assets/The_Beginning_of_You_and_I_Skill.png" 
+            alt="Skill 2"
+            onclick="toggleDescription('skill2')"
+          />
+          <div id="skill2" class="skill-description hidden absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 p-4 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg w-64">
+            <h3 class="font-bold text-[#483695] mb-2">The Beginning of You and I</h3>
+            <p class="text-sm text-[#483695]">Creates a field that amplifies Anemo DMG and provides buffs to party members.</p>
+          </div>
+        </div>
+        
+        <div class="relative">
+          <img 
+            class="transition-transform scale-80 hover:scale-100 duration-400 cursor-pointer" 
+            src="./assets/Radiant_Destiny_Skill.png" 
+            alt="Skill 3"
+            onclick="toggleDescription('skill3')"
+          />
+          <div id="skill3" class="skill-description hidden absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 p-4 bg-white/90 backdrop-blur-sm rounded-lg shadow-lg w-64">
+            <h3 class="font-bold text-[#483695] mb-2">Radiant Destiny</h3>
+            <p class="text-sm text-[#483695]">Unleashes a powerful burst of Anemo energy that deals AoE DMG and creates a lasting field effect.</p>
+          </div>
+        </div>
       </div>
     </div>
+    
+    <script>
+      function toggleDescription(skillId) {
+        const desc = document.getElementById(skillId);
+        const allDescs = document.querySelectorAll('[id^="skill"]');
+        
+        // Hide all other descriptions first
+        allDescs.forEach(el => {
+          if (el.id !== skillId) {
+            hideDescription(el);
+          }
+        });
+        
+        // Toggle the clicked description
+        if (desc.classList.contains('hidden')) {
+          showDescription(desc);
+        } else {
+          hideDescription(desc);
+        }
+      }
+
+      function showDescription(element) {
+        element.classList.remove('hidden');
+        // Allow DOM to update before adding show class
+        requestAnimationFrame(() => {
+          element.classList.add('show');
+        });
+      }
+
+      function hideDescription(element) {
+        element.classList.remove('show');
+        // Wait for animation to complete before hiding
+        element.addEventListener('transitionend', function handler() {
+          element.classList.add('hidden');
+          element.removeEventListener('transitionend', handler);
+        });
+      }
+    </script>
   </body>
 </html>
